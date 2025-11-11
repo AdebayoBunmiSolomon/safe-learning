@@ -4,6 +4,7 @@ import { darkThemeColors, lightThemeColors, ThemeProvider } from "./Theme";
 import { Button } from "./components/ui";
 import { ProgressBar } from "./progress-bar/ProgressBar";
 import { useProgressBar } from "./progress-bar/useProgressBar";
+import { VoiceNote } from "./voice-note/VoiceNote";
 
 const themes: AppThemeType[] = ["light", "dark", "system"];
 
@@ -19,10 +20,11 @@ export default function App() {
     <ThemeProvider>
       <View
         style={{
-          paddingVertical: 50,
+          paddingVertical: 100,
           paddingHorizontal: 20,
+          flex: 1,
         }}>
-        <ProgressBar
+        {/* <ProgressBar
           numberOfSteps={numberOfSteps}
           currentStep={currentStep}
           activeBgColor={lightThemeColors.red}
@@ -32,8 +34,9 @@ export default function App() {
           inActiveCircleTextColor={lightThemeColors.black}
           addedSteps={addedSteps}
           // submittedCircleTextColor={"green"}
-        />
-        <View
+        /> */}
+        <VoiceNote />
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -57,7 +60,7 @@ export default function App() {
               width: "45%",
             }}
           />
-        </View>
+        </View> */}
       </View>
     </ThemeProvider>
   );
