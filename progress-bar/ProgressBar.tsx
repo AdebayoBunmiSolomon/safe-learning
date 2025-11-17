@@ -185,6 +185,7 @@ export const ProgressBar: React.FC<IProgressBarProps> = ({
                 {
                   width: `${100 / numberOfSteps - 1}%`,
                 },
+                containerStyle,
               ]}>
               {/* Background inactive dash */}
               <View
@@ -234,6 +235,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: "100%",
     overflow: "hidden",
+    height: 20,
   },
   progress: {
     height: 10,

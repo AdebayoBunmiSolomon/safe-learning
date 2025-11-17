@@ -28,6 +28,7 @@ export const VoiceNote: React.FC = () => {
     deleteRecording,
     playbackProgress,
     isPlaying,
+    formatDate,
   } = useVoiceNote();
 
   // Initialize audio permissions
@@ -99,15 +100,6 @@ export const VoiceNote: React.FC = () => {
             borderColor: isCurrentlyPlaying ? colors.red : colors.blue,
           },
         ]}>
-        <View style={styles.voiceNoteHeader}>
-          <AppText color='black' fontType='medium' style={styles.noteNumber}>
-            Voice Note #{index + 1}
-          </AppText>
-          <AppText color='black' fontType='regular' style={styles.noteDuration}>
-            {formatDuration(recording.duration)?.paddedVal}
-          </AppText>
-        </View>
-
         <View style={styles.voiceNoteControls}>
           <Pressable
             style={[styles.playButton, { backgroundColor: colors.blue }]}
@@ -122,10 +114,10 @@ export const VoiceNote: React.FC = () => {
           <View style={styles.progressContainer}>
             <ProgressBar
               numberOfSteps={100}
-              currentStep={playbackProgress}
+              currentStep={isCurrentlyPlaying ? playbackProgress : 0}
               containerStyle={styles.progressBar}
               progressType='line'
-              activeBgColor={colors.red}
+              activeBgColor={colors.bgColor}
             />
           </View>
 
@@ -135,16 +127,22 @@ export const VoiceNote: React.FC = () => {
             <MaterialIcons name='delete' size={18} color={colors.black} />
           </Pressable>
         </View>
-
-        <AppText color='black' fontType='regular' style={styles.noteDate}>
-          {recording.recordedAt.toLocaleString()}
-        </AppText>
+        <View style={styles.voiceNoteHeader}>
+          <AppText color='black' fontType='regular' style={styles.noteDate}>
+            {`${formatDate(String(recording.recordedAt))?.hrs}:${
+              formatDate(String(recording.recordedAt))?.mins
+            }`}
+          </AppText>
+          <AppText color='black' fontType='regular' style={styles.noteDuration}>
+            {formatDuration(recording.duration)?.paddedVal}
+          </AppText>
+        </View>
       </View>
     );
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.bgColor }]}>
+    <View style={styles.container}>
       {renderRecordingControls()}
 
       <ScrollView style={styles.voiceNotesList}>
@@ -235,7 +233,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   voiceNoteCard: {
-    padding: 16,
+    paddingVertical: 2,
+    paddingHorizontal: 10,
     borderRadius: 12,
     marginBottom: 12,
     borderWidth: 2,
@@ -244,7 +243,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 12,
+    paddingHorizontal: 5,
   },
   noteNumber: {
     fontSize: 14,
@@ -256,7 +255,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    marginBottom: 8,
   },
   playButton: {
     width: 36,
